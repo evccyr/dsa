@@ -1,4 +1,4 @@
-export function minEatingSpeed(p: number[], h: number): number {
+export const minEatingSpeed = (p: number[], h: number): number => {
   let s: number = 1
   let e: number = Math.max(...p)
   let res: number = e

@@ -1,13 +1,14 @@
-# Data structures & Algorithms 🗿
+# Neetcode 150 🗿
 
-Solutions to Leetcode problems from the Neetcode 150 list
+Typescript solutions to Leetcode problems from the Neetcode 150 list
 
 ## Useful Links 
 
 [Leetcode Website](https://leetcode.com/problems)\
 [neetcode.io roadmap](https://neetcode.io/roadmap)\
 [Neetcode's YouTube channel link](https://www.youtube.com/@NeetCode)\
-[Neetcode's Leetcode solutions repository](https://github.com/neetcode-gh/leetcode)
+[Neetcode's Leetcode solutions repository](https://github.com/neetcode-gh/leetcode)\
+[Vitest unit test framework](https://vitest.dev/) 
 
 ## Grandma's Place 👵🏚️
 
@@ -24,11 +25,74 @@ Problems worth a revisit
 * [ ] [Find the Duplicate Number ](https://leetcode.com/problems/find-the-duplicate-number/description/)
 
 ## Contributing
-* Improvements to Solutions
-  * Neatly formatted(prettier, ESlint)
-  * Better time/space complexity with explanation
-  * Readable
-  * Relevant comments
+
+* Only typescript(.ts) files are allowed
+* Neatly formatted(prettier, ESlint) code
+* Add link to related Neetcode solution video
+* Only add explanation if your approach is better than Neetcode's
+* Add time/space complexity with shortest possible explanation
+* Code has to be readable(descriptive variable names, etc.)
+* Add relevant comments wherever necessary
+* If possible write tests using [vitest](https://vitest.dev/)
+* PR Example:
+  * src/longest-commmon-prefix.ts
+  ```ts
+  export const longestCommonPrefix = (s: string[]): string => {
+    s = s.sort()
+    let i: number = 0
+    let first: string = s[0] // first string in array
+    let last: string = s[s.length - 1] // second string in array
+    // i should not exceed the length of the shorter of the first and last string 
+    let shorterString: number = Math.min(first.length, last.length)
+    while (first[i] === last[i] && i < shorterString) i++
+    return first.slice(0, i)
+  }
+  ```
+  * tests/longest-commmon-prefix.test.ts
+  ```ts
+  import { longestCommonPrefix } from "../src/longest-common-prefix"
+  import { expect, test } from "vitest"
+  // use descriptive test names
+  test('finds the longest common prefix in a collection of strings', () => {
+    let strs1: string[] = ["flower", "flow", "flight"]
+    let strs2: string[] = ["dog", "racecar", "car"]
+    expect(longestCommonPrefix(strs1)).toEqual("fl")
+    expect(longestCommonPrefix(strs2)).toEqual("")
+  })
+  ```
+  * README.md
+  <code>
+  * [x] [Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)
+    * Neetcode's solution: <https://www.youtube.com/watch?v=0sWShKIJoo4>
+    * Explanation
+    Instead of using the Neetcode's approach we use another trick which is to
+    sort the array & then only compare the first and the last string of the
+    array instead of comparing all the strings which would result in a better
+    time complexity.
+    This solution works because Javascript sorts the array by strings. This
+    will closely group the strings that are more alike & the strings that are
+    least alike will go the extreme ends of the array after sorting and these
+    strings are the ones that will result in the shortest common prefix.
+    This is more obvious from the below node REPL output:
+    ```js
+    > let s = ["chicken", "duck", "dutch", "children", "parrot", "china"]
+    [ 'chicken', 'duck', 'children', 'china' ]
+    > s.sort()
+    [ 'chicken', 'children', 'china', 'duck']
+    ```
+    Although 3 of the 4 strings have the common prefix 'chi', one of
+    them('duck') does not have any common character with any of the other
+    strings so it makes sense to only compare 'chicken' & 'duck' which are
+    least alike.
+  </code>
+* Code standard:
+  * Use function expression
+  ```ts
+  // prefer function expression
+  export const longestCommonPrefix = (s: string[]): string => {}
+  // avoid this to prevent hoisting
+  function longestCommonPrefix (s: string[]): string {}
+  ```
 
 ## All problems
 
